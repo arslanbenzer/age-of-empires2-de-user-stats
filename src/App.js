@@ -19,21 +19,21 @@ class App extends Component {
     return (
       <div style={{marginLeft: 40 + 'px'}}>
         <br></br>
-        <div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <Button variant="contained" color="primary" onClick={this.getMatchesData.bind(this)}>
             Matches
           </Button>
-          <Button variant="contained" color="primary" onClick={this.getRatingData.bind(this)}>
+          <Button variant="contained" color="secondary" onClick={this.getRatingData.bind(this)} style={{marginLeft: 10 + 'px'}}>
             Ratings
           </Button>
         </div>
         <br></br>
-        <div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <TextField name="userID" label="Steam ID" variant="outlined" value={this.state.userID} onChange={event => this.setState({ "userID": event.target.value })} />
-          <TextField name="count" label="count" variant="outlined" value={this.state.count} onChange={event => this.setState({ "count": event.target.value })} />
+          <TextField name="count" label="count" variant="outlined" value={this.state.count} onChange={event => this.setState({ "count": event.target.value })} style={{marginLeft: 10 + 'px'}} />
         </div>
         <br></br>
-        <div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           {this.state && this.state.matches ?
             <Table matches={this.state.matches} /> : null
           }
