@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Table from './table.js';
+import TableMatches from './table.js';
 import TableRatings from './table_ratings.js';
 
 import Button from '@material-ui/core/Button';
@@ -35,7 +35,7 @@ class App extends Component {
         <br></br>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           {this.state && this.state.matches ?
-            <Table matches={this.state.matches} /> : null
+            <TableMatches matches={this.state.matches} /> : null
           }
           {this.state && this.state.ratings ?
             <TableRatings matches={this.state.ratings} /> : null
