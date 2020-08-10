@@ -9,9 +9,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-
-import Player from './components/Player'
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -19,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TableMatches = ({ matches }) => {
+const TableLeaderboard = ({ players }) => {
   const classes = useStyles();
 
   return (
@@ -28,31 +25,26 @@ const TableMatches = ({ matches }) => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Leaderboard</TableCell>
-              <TableCell>Server</TableCell>
-              <TableCell>Players</TableCell>
-              <TableCell>Started</TableCell>
+              <TableCell>Rank</TableCell>
+              <TableCell>Rating</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Number of Games</TableCell>
+              <TableCell>Streak</TableCell>
+              <TableCell>Won</TableCell>
+              <TableCell>Last Match</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {(matches.length > 0) ? matches.map((droplet, index) => {
-
-              let players = droplet.players;
-              let rows = [];
-              for (let index = 0; index < players.length; index++) {
-                rows.push(<Player name={players[index].name} won={players[index].won} team={players[index].team} rating={players[index].rating} />);
-              }
-
+            {(players.length > 0) ? players.map((player, index) => {
               return (
                 <TableRow key={index}>
-                  <TableCell >{index + 1}</TableCell>
-                  <TableCell >{droplet.leaderboard_id}</TableCell>
-                  <TableCell >{droplet.server}</TableCell>
-                  <TableCell >
-                    {rows}
-                  </TableCell>
-                  <TableCell >{new Date(droplet.started * 1000).toLocaleString()}</TableCell>
+                  <TableCell >{player.rank}</TableCell>
+                  <TableCell >{player.rating}</TableCell>
+                  <TableCell >{player.name}</TableCell>
+                  <TableCell >{player.games} </TableCell>
+                  <TableCell >{player.streak}</TableCell>
+                  <TableCell >{player.wins} ({(player.wins/player.games*100).toFixed(2)}%)</TableCell>
+                  <TableCell >{new Date(player.last_match * 1000).toLocaleString()}</TableCell>
                 </TableRow >
               )
             }) : <tr><td colSpan="5">Loading...</td></tr>}
@@ -63,4 +55,4 @@ const TableMatches = ({ matches }) => {
   );
 }
 
-export default TableMatches
+export default TableLeaderboard
