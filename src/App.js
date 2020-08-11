@@ -9,11 +9,16 @@ import TextField from '@material-ui/core/TextField';
 class App extends Component {
   constructor(props) {
     super(props);
+    const axios = require('axios');
 
     this.state = {
       userID: "76561198014256703",
       count: "250"
     }
+
+    axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/strings?game=aoe2de&language=en').then((resp) => {
+      this.setState({ 'strings': resp.data });
+    });
   }
 
   render() {
@@ -39,13 +44,13 @@ class App extends Component {
         <br></br>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           {this.state && this.state.matches ?
-            <TableMatches matches={this.state.matches} /> : null
+            <TableMatches matches={this.state.matches} strings={this.state.strings}/> : null
           }
           {this.state && this.state.ratings ?
             <TableRatings matches={this.state.ratings} /> : null
           }
           {this.state && this.state.leaderboard ?
-            <TableLeaderboard players={this.state.leaderboard} /> : null
+            <TableLeaderboard players={this.state.leaderboard}/> : null
           }
         </div>
       </div>
