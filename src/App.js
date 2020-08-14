@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TableMatches from './table.js';
 import TableRatings from './table_ratings.js';
-import TableLeaderboard from './table_leaderboard.js'
+import TableLeaderboard from './TableLeaderBoard.js'
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -40,7 +40,8 @@ class App extends Component {
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <TextField name="userID" label="Steam ID" variant="outlined" value={this.state.userID} onChange={event => this.setState({ "userID": event.target.value })} />
           <TextField name="count" label="count" variant="outlined" value={this.state.count} onChange={event => this.setState({ "count": event.target.value })} style={{marginLeft: 10 + 'px'}} />
-        </div>
+          <TextField name="searchParam" label="Search Text" variant="outlined" value={this.state.searchParam} onChange={event => this.setState({ "searchParam": event.target.value })} style={{marginLeft: 10 + 'px'}} />
+       </div>
         <br></br>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           {this.state && this.state.matches ?
@@ -77,7 +78,7 @@ class App extends Component {
 
   getLeaderboardData() {
     const axios = require('axios');
-    axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=3&start=1' + '&count=' + this.state.count).then((resp) => {
+    axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=3&start=1&search=' + this.state.searchParam + '&count=' + this.state.count).then((resp) => {
       this.setState({ 'matches': undefined });
       this.setState({ 'ratings': undefined });
       this.setState({ 'leaderboard': resp.data.leaderboard });

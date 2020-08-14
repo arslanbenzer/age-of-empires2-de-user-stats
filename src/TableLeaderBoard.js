@@ -16,8 +16,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const handleClick = (id) => {
+  console.log(id);
+}
+
 const TableLeaderboard = ({ players }) => {
   const classes = useStyles();
+
 
   return (
     <div>
@@ -40,10 +45,14 @@ const TableLeaderboard = ({ players }) => {
                 <TableRow key={index}>
                   <TableCell >{player.rank}</TableCell>
                   <TableCell >{player.rating}</TableCell>
-                  <TableCell >{player.name}</TableCell>
+                  <TableCell onClick={() => { handleClick(player.steam_id) }}>
+                    <span style={{cursor: 'pointer', color: 'blue'}}>
+                      {player.name}
+                    </span>
+                  </TableCell>
                   <TableCell >{player.games} </TableCell>
                   <TableCell >{player.streak}</TableCell>
-                  <TableCell >{player.wins} ({(player.wins/player.games*100).toFixed(2)}%)</TableCell>
+                  <TableCell >{player.wins} ({(player.wins / player.games * 100).toFixed(2)}%)</TableCell>
                   <TableCell >{new Date(player.last_match * 1000).toLocaleString()}</TableCell>
                 </TableRow >
               )
