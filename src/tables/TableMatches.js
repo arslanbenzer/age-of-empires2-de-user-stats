@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 
-import Player from './components/Player'
+import Player from './../components/Player'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TableMatches = props => {
   const classes = useStyles();
-
-  console.log(props);
 
   let leaderBoardTypes = {0:"Unranked", 1:"1v1 Deathmatch", 2:"Team Deathmatch", 3:"1v1 Random Map", 4:"Team Random Map"};
 

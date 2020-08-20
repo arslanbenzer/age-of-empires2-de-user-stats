@@ -9,6 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import { Link, Route, Switch } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const handleClick = (id) => {
-  console.log(id);
+
 }
 
 const TableLeaderboard = ({ players }) => {
@@ -46,9 +48,7 @@ const TableLeaderboard = ({ players }) => {
                   <TableCell >{player.rank}</TableCell>
                   <TableCell >{player.rating}</TableCell>
                   <TableCell onClick={() => { handleClick(player.steam_id) }}>
-                    <span style={{cursor: 'pointer', color: 'blue'}}>
-                      {player.name}
-                    </span>
+                    <Link to={"/profile?id=" + player.steam_id }>{player.name}</Link>
                   </TableCell>
                   <TableCell >{player.games} </TableCell>
                   <TableCell >{player.streak}</TableCell>
