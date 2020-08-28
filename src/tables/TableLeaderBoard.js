@@ -25,7 +25,6 @@ const handleClick = (id) => {
 const TableLeaderboard = ({ players }) => {
   const classes = useStyles();
 
-
   return (
     <div>
       <TableContainer component={Paper}>
