@@ -4,8 +4,12 @@ import queryString from 'query-string';
 import TableMatches from './../tables/TableMatches.js';
 import TableRatings from './../tables/TableRatings.js';
 import TableSummary from './../tables/TableSummary'
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class Profile extends Component {
 
@@ -29,28 +33,28 @@ class Profile extends Component {
     getStrings() {
         const axios = require('axios');
 
-        axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/strings?game=aoe2de&language=en').then((resp) => {
+        axios.get('https://aoe2.net/api/strings?game=aoe2de&language=en').then((resp) => {
             this.setState({ 'strings': resp.data });
         });
     }
 
     getRatingData() {
         const axios = require('axios');
-        axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=3&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
+        axios.get('https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=3&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
             this.setState({ 'ratings': resp.data });
         });
     }
 
     getMatchesData() {
         const axios = require('axios');
-        axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/player/matches?game=aoe2de&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
+        axios.get('https://aoe2.net/api/player/matches?game=aoe2de&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
             this.setState({ 'matches': resp.data });
         });
     }
 
     getLeaderboardData(leaderboard_id){
         const axios = require('axios');
-        axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=' + leaderboard_id + '&start=1&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
+        axios.get('https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=' + leaderboard_id + '&start=1&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
           this.setState({ 'summary': resp.data.leaderboard });
         });
     }
@@ -77,6 +81,25 @@ class Profile extends Component {
                     }
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <FormGroup row>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="checkedA"
+                                />
+                            }
+                            label="Secondary"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="checkedB"
+                                    color="primary"
+                                />
+                            }
+                            label="Primary"
+                        />
+                    </FormGroup>
                     {
                         this.state && this.state.ratings ? <TableRatings matches={this.state.ratings} /> : null
                     }

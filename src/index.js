@@ -4,7 +4,7 @@ import './index.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from './App';
 import Profile from './pages/Profile'
-import Layout from './components/Layout'
+import Layout from './Components/Layout'
 
 ReactDOM.render(
   <Router>

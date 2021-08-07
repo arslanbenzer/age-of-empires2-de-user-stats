@@ -48,7 +48,7 @@ class App extends Component {
 
   getLeaderboardData(leaderboard_id) {
     const axios = require('axios');
-    axios.get('https://cors-anywhere.herokuapp.com/https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=' + leaderboard_id + '&start=1&search=' + this.state.searchParam + '&count=' + this.state.count).then((resp) => {
+    axios.get('https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=' + leaderboard_id + '&start=1&search=' + this.state.searchParam + '&count=' + this.state.count).then((resp) => {
       this.setState({ 'leaderboard': resp.data.leaderboard });
     });
   }
