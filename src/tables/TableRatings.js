@@ -1,37 +1,51 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 import '../../node_modules/react-vis/dist/style.css';
 
-import { XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
+import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 
 const useStyles = makeStyles({
-  table: {
-    maxWidth: 600,
-  },
+    table: {
+        maxWidth: 600,
+    },
 });
 
-const TableRatings = ({ matches }) => {
+const getData = (matches) => {
+    let data = [];
 
-  const classes = useStyles();
+    for (let i = matches?.length - 1; i >= 0; i -= 1) {
+        data.push({
+            "x": new Date(matches[i
+                ].timestamp * 1000).getTime(), "y": matches[i].rating
+        })
+    }
+    return data;
+}
 
-  var data = [];
+const TableRatings = ({ratings}) => {
 
-  for (var i = matches.length - 1; i >= 0; i -= 1) {
-    data.push({ "x": new Date(matches[i].timestamp * 1000).getTime(), "y": matches[i].rating })
-  }
+    const classes = useStyles();
 
-  return (
-    <div>
-      <XYPlot xType="time" height={300} width={1600}>
-        <HorizontalGridLines />
-        <VerticalGridLines />
-        <XAxis title="Time" />
-        <YAxis title="Rating" />
-        <LineSeries data={data} lineStyle={{ stroke: "red" }} markStyle={{ stroke: "blue" }} />
-      </XYPlot>
-    </div>
-  );
+    console.log("ratingsssss: ", ratings);
+
+    return (
+        <div>
+            <XYPlot xType="time" height={
+                300} width={1600}>
+                <HorizontalGridLines
+                />
+                <VerticalGridLines/>
+                <XAxis title="Time"/>
+                <YAxis title="Rating"/>
+                {
+                    ratings.map((rating, i) =>
+                        <LineSeries data={getData(rating.data)} lineStyle={{stroke: "red"}} markStyle={{stroke: "blue"}}/>
+                    )
+                }
+            </XYPlot>
+        </div>
+    );
 }
 
 export default TableRatings

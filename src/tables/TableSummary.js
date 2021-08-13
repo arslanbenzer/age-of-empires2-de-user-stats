@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,48 +17,54 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TableSummary = (summary) => {
+const TableSummary = ({summary, leaderboardStrings}) => {
     const classes = useStyles();
-
-    const player = summary.data[0];
-    console.log(player);
+    console.log("summ:  ", summary);
+    console.log("leaderboardStrings:  ", leaderboardStrings);
     return (
-        <div>
-            <TableContainer component={Paper} height={300} width={1600}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Leaderboard</TableCell>
-                            <TableCell>Rank</TableCell>
-                            <TableCell>Rating</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Current Streak</TableCell>
-                            <TableCell>Lowest Streak</TableCell>
-                            <TableCell>Hights Streak</TableCell>
-                            <TableCell>Number of Games</TableCell>
-                            <TableCell>Wins</TableCell>
-                            <TableCell>Loses</TableCell>
-                            <TableCell>Last Match</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow key={0}>
-                            <TableCell >RM 1v1</TableCell>
-                            <TableCell >{player.rank}</TableCell>
-                            <TableCell >{player.rating}</TableCell>
-                            <TableCell >{player.name}</TableCell>
-                            <TableCell >{player.streak}</TableCell>
-                            <TableCell >{player.lowest_streak}</TableCell>
-                            <TableCell >{player.highest_streak}</TableCell>
-                            <TableCell >{player.games} </TableCell>
-                            <TableCell >{player.wins} ({(player.wins / player.games * 100).toFixed(2)}%)</TableCell>
-                            <TableCell >{player.losses}</TableCell>
-                            <TableCell >{new Date(player.last_match * 1000).toLocaleString()}</TableCell>
-                        </TableRow >
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
+        summary ?
+            <div>
+                <TableContainer component={Paper} height={300} width={1600}>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Leaderboard</TableCell>
+                                <TableCell>Rank</TableCell>
+                                <TableCell>Rating</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Current Streak</TableCell>
+                                <TableCell>Lowest Streak</TableCell>
+                                <TableCell>Hights Streak</TableCell>
+                                <TableCell>Number of Games</TableCell>
+                                <TableCell>Wins</TableCell>
+                                <TableCell>Loses</TableCell>
+                                <TableCell>Last Match</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                summary.map((leaderboard) =>
+                                    leaderboard.leaderboard[0] ?
+                                        <TableRow key={0}>
+                                            <TableCell>{leaderboardStrings[leaderboard.leaderboard_id]}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].rank}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].rating}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].name}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].streak}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].lowest_streak}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].highest_streak}</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].games} </TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].wins} ({(leaderboard.leaderboard[0].wins / leaderboard.leaderboard[0].games * 100).toFixed(2)}%)</TableCell>
+                                            <TableCell>{leaderboard.leaderboard[0].losses}</TableCell>
+                                            <TableCell>{new Date(leaderboard.leaderboard[0].last_match * 1000).toLocaleString()}</TableCell>
+                                        </TableRow> : null
+                                )
+                            }
+
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div> : null
     );
 };
 
