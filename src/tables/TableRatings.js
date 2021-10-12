@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
 import '../../node_modules/react-vis/dist/style.css';
 
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
+import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, Hint} from 'react-vis';
 
 const useStyles = makeStyles({
     table: {
@@ -27,8 +27,6 @@ const TableRatings = ({ratings}) => {
 
     const classes = useStyles();
 
-    console.log("ratingsssss: ", ratings);
-
     return (
         <div>
             <XYPlot xType="time" height={
@@ -40,7 +38,12 @@ const TableRatings = ({ratings}) => {
                 <YAxis title="Rating"/>
                 {
                     ratings.map((rating, i) =>
-                        <LineSeries data={getData(rating.data)} lineStyle={{stroke: "red"}} markStyle={{stroke: "blue"}}/>
+                        !rating.hidden &&
+                        <LineSeries
+                            data={getData(rating.data)}
+                            lineStyle={{stroke: "red"}}
+                            markStyle={{stroke: "blue"}}
+                        />
                     )
                 }
             </XYPlot>

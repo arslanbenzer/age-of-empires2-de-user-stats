@@ -44,6 +44,9 @@ class Profile extends Component {
     }
 
     getRatingData() {
+        this.setState({
+            ratings: [],
+        });
         this.getLeaderboardRatings(3);
         this.getLeaderboardRatings(4);
         this.getLeaderboardRatings(13);
@@ -60,6 +63,7 @@ class Profile extends Component {
                         {
                             'data': resp.data,
                             leaderboardId,
+                            hidden: 0,
                         }
                     ]
             });
@@ -96,6 +100,20 @@ class Profile extends Component {
         return leaderMap;
     }
 
+    onChangeCheckBox(checked, index) {
+        debugger;
+        const { ratings } = this.state;
+        if (checked) {
+            ratings[index].hidden = 0;
+
+        } else {
+            ratings[index].hidden = 1;
+        }
+        this.setState({
+            ratings
+        })
+    }
+
     render() {
         return (
             <div style={{marginLeft: 40 + 'px'}}>
@@ -122,26 +140,32 @@ class Profile extends Component {
                                                                          leaderboardStrings={this.getLeaderboardNames()}/> : null
                     }
                 </div>
+                <br></br>
+                <hr></hr>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <FormGroup row>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="checkedA"
-                                />
-                            }
-                            label="Secondary"
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="checkedB"
-                                    color="primary"
-                                />
-                            }
-                            label="Primary"
-                        />
-                    </FormGroup>
+                    {
+                        this.state && this.state.ratings ?
+                            <FormGroup row>
+                                {
+                                    this.state.ratings.map((rating, i) => {
+                                        const leaderboardName = this.getLeaderboardNames()[rating.leaderboardId];
+                                        return (<FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    defaultChecked={1}
+                                                    name={leaderboardName}
+                                                    onChange={event => this.onChangeCheckBox(event.target.checked, i)}
+                                                />
+                                            }
+                                            label={leaderboardName}
+                                        />)
+                                    })
+                                }
+                            </FormGroup>
+                            : null
+                    }
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
                     {
                         this.state && this.state.ratings ? <TableRatings ratings={this.state.ratings}/> : null
                     }
