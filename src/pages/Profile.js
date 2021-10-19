@@ -167,7 +167,7 @@ class Profile extends Component {
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     {
-                        this.state && this.state.ratings ? <TableRatings ratings={this.state.ratings}/> : null
+                        this.state && this.state.ratings ? <TableRatings ratings={this.state.ratings} leaderboardNames={this.getLeaderboardNames()}/> : null
                     }
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
