@@ -12,12 +12,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from "axios";
 
+import {corsAnywhere} from './../appConstants' 
+
 class Profile extends Component {
 
     constructor(props) {
         super(props);
         const axios = require('axios');
-
         let params = queryString.parse(window.location.search);
 
         this.state = {
@@ -38,7 +39,7 @@ class Profile extends Component {
     getStrings() {
         const axios = require('axios');
 
-        axios.get('https://aoe2.net/api/strings?game=aoe2de&language=en').then((resp) => {
+        axios.get(corsAnywhere + 'https://aoe2.net/api/strings?game=aoe2de&language=en').then((resp) => {
             this.setState({'strings': resp.data});
         });
     }
@@ -55,7 +56,7 @@ class Profile extends Component {
 
     getLeaderboardRatings(leaderboardId) {
         const axios = require('axios');
-        axios.get('https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=' + leaderboardId + '&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
+        axios.get(corsAnywhere + 'https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=' + leaderboardId + '&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
             this.setState({
                 'ratings':
                     [
@@ -72,7 +73,7 @@ class Profile extends Component {
 
     getMatchesData() {
         const axios = require('axios');
-        axios.get('https://aoe2.net/api/player/matches?game=aoe2de&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
+        axios.get(corsAnywhere + 'https://aoe2.net/api/player/matches?game=aoe2de&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
             this.setState({'matches': resp.data});
         });
     }
@@ -86,7 +87,7 @@ class Profile extends Component {
 
     getLeaderboardData(leaderboard_id) {
         const axios = require('axios');
-        axios.get('https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=' + leaderboard_id + '&start=1&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
+        axios.get(corsAnywhere + 'https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=' + leaderboard_id + '&start=1&steam_id=' + this.state.userID + '&count=' + this.state.count).then((resp) => {
             this.setState({'summary': [...this.state.summary, resp.data]});
         });
     }

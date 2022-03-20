@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
 import '../../node_modules/react-vis/dist/style.css';
@@ -56,7 +56,6 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const TableRatings = ({ratings, leaderboardNames}) => {
 
-    const classes = useStyles();
     console.log("data: ", ratings[0]);
 
     const ticks = [];
