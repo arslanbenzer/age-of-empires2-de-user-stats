@@ -35,7 +35,7 @@ class App extends Component {
       clearTimeout(this.state.typingTimeout);
     }
     const { currentLeader } = this.state;
-
+    
     this.setState({
       searchParam: event.target.value,
       typing: false,
