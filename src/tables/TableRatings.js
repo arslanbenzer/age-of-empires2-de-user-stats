@@ -20,8 +20,15 @@ let maxTick = 0;
 
 const colors = ["#82ca9d", "#445590", "#f36622", "#f3d611"];
 
+const resetTicks = () => {
+    minTick = Infinity;
+    maxTick = 0;
+}
+
 const getData = (matches) => {
     let data = [];
+
+    console.log("updating ticks");
 
     for (let i = matches?.length - 1; i >= 0; i -= 1) {
         const time = moment(matches[i].timestamp * 1000).valueOf();
@@ -37,8 +44,6 @@ const getData = (matches) => {
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-        debugger;
-
         return (
             <div className="custom-tooltip" style={{padding: "2px", background: "#fcfcfc", border: "1px solid #555555"}}>
                 <p className="label">{`${moment(label).format('DD MMM YYYY HH:mm')}`}</p>
@@ -55,16 +60,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const TableRatings = ({ratings, leaderboardNames}) => {
-
-    console.log("data: ", ratings[0]);
-
+    resetTicks();
     const ticks = [];
     const diff = maxTick - minTick;
     for (let i = 0; i <= tickCount; i++) {
         ticks.push(Math.floor(minTick + diff * i / (tickCount + 1)));
     }
 
-    console.log("ticks:", ticks);
     return (
         <div>
             <LineChart width={1230} height={550}
@@ -87,7 +89,7 @@ const TableRatings = ({ratings, leaderboardNames}) => {
                 {
                     ratings.map((rating, i) =>
                         !rating.hidden &&
-                        <Line data={getData(rating.data)} type="monotone" name={leaderboardNames[rating.leaderboardId]} dataKey="rating" stroke={colors[i]}/>
+                        <Line data={getData(rating.data)} type="linear" name={leaderboardNames[rating.leaderboardId]} dataKey="rating" stroke={colors[i]}/>
                     )
                 }
                 //  <Tooltip content={<CustomTooltip />} />

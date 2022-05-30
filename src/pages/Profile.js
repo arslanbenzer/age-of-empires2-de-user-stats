@@ -25,6 +25,7 @@ class Profile extends Component {
             userID: params.id,
             count: 250,
             ratings: [],
+            isHidden: {},
             summary: [],
         }
     }
@@ -64,11 +65,16 @@ class Profile extends Component {
                         {
                             'data': resp.data,
                             leaderboardId,
-                            hidden: 0,
+                            hidden: this.state.isHidden[leaderboardId] ? 1 : 0,
                         }
                     ]
             });
         });
+    }
+
+    getMatches(){
+        this.getMatchesData();
+        this.getRatingData();
     }
 
     getMatchesData() {
@@ -102,13 +108,15 @@ class Profile extends Component {
     }
 
     onChangeCheckBox(checked, index) {
+        const { ratings, isHidden } = this.state;
         debugger;
-        const { ratings } = this.state;
         if (checked) {
             ratings[index].hidden = 0;
+            isHidden[ratings[index].leaderboardId] = 0;
 
         } else {
             ratings[index].hidden = 1;
+            isHidden[ratings[index].leaderboardId] = 1;
         }
         this.setState({
             ratings
@@ -121,24 +129,19 @@ class Profile extends Component {
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <TextField name="userID" label="Steam ID" variant="outlined" value={this.state.userID}
                                onChange={event => this.setState({"userID": event.target.value})}/>
-                    <TextField name="count" label="count" variant="outlined" value={this.state.count}
+                    <TextField name="Match Count" label="count" variant="outlined" value={this.state.count}
                                onChange={event => this.setState({"count": event.target.value})}
                                style={{marginLeft: 10 + 'px'}}/>
                 </div>
                 <br></br>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button variant="contained" color="primary" onClick={this.getMatchesData.bind(this)}>
-                        Matches
-                    </Button>
-                    <Button variant="contained" color="secondary" onClick={this.getRatingData.bind(this)}
-                            style={{marginLeft: 10 + 'px'}}>
-                        Ratings
+                    <Button variant="contained" color="primary" onClick={this.getMatches.bind(this)}>
+                        Get Matches
                     </Button>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     {
-                        this.state && this.state.summary ? <TableSummary summary={this.state.summary}
-                                                                         leaderboardStrings={this.getLeaderboardNames()}/> : null
+                        this.state && this.state.summary ? <TableSummary summary={this.state.summary} leaderboardStrings={this.getLeaderboardNames()}/> : null
                     }
                 </div>
                 <br></br>
@@ -153,7 +156,7 @@ class Profile extends Component {
                                         return (<FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    defaultChecked={1}
+                                                    defaultChecked={!rating.hidden}
                                                     name={leaderboardName}
                                                     onChange={event => this.onChangeCheckBox(event.target.checked, i)}
                                                 />
@@ -168,7 +171,8 @@ class Profile extends Component {
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     {
-                        this.state && this.state.ratings ? <TableRatings ratings={this.state.ratings} leaderboardNames={this.getLeaderboardNames()}/> : null
+                        this.state && this.state.ratings ? 
+                            <TableRatings ratings={this.state.ratings} leaderboardNames={this.getLeaderboardNames()}/> : null
                     }
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
