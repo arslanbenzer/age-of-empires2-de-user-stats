@@ -109,7 +109,6 @@ class Profile extends Component {
 
     onChangeCheckBox(checked, index) {
         const { ratings, isHidden } = this.state;
-        debugger;
         if (checked) {
             ratings[index].hidden = 0;
             isHidden[ratings[index].leaderboardId] = 0;

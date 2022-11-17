@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import { corsAnywhere } from './appConstants.js'
+import { MenuItem, Select } from '@material-ui/core';
 
 class App extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class App extends Component {
       clearTimeout(this.state.typingTimeout);
     }
     const { currentLeader } = this.state;
-    
+
     this.setState({
       searchParam: event.target.value,
       typing: false,
@@ -45,17 +46,21 @@ class App extends Component {
     });
   }
 
+  onChangeLeaderboard = (event) => {
+    this.getLeaderboardData(event.target.value);
+  }
+
   render() {
     return (
       <div style={{ marginLeft: 40 + 'px' }}>
         <br></br>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button variant="contained" color="primary" onClick={() => this.getLeaderboardData(3)} style={{ marginLeft: 10 + 'px' }}>
-            1v1 Leaderboard
-          </Button>
-          <Button variant="contained" color="primary" onClick={() => this.getLeaderboardData(4)} style={{ marginLeft: 10 + 'px' }}>
-            Team Leaderboard
-          </Button>
+          <Select color="primary" onChange={this.onChangeLeaderboard} defaultValue={3}>
+            <MenuItem value={3}>1v1 Random Map</MenuItem>
+            <MenuItem value={4}>Team Random Map</MenuItem>
+            <MenuItem value={13}>1v1 Empire Wars</MenuItem>
+            <MenuItem value={14}>Team Empire Wars</MenuItem>
+          </Select>
         </div>
         <br></br>
         <div style={{ display: 'flex', justifyContent: 'center' }}>

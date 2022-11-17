@@ -93,6 +93,7 @@ const TableMatches = props => {
                             for (let index = 0; index < players.length; index++) {
                                 rows.push(
                                     <Player
+                                        disabled
                                         name={players[index].name}
                                         won={players[index].won}
                                         team={players[index].team}
